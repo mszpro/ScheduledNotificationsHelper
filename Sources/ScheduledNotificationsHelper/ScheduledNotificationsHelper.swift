@@ -159,7 +159,7 @@ public class ScheduledNotificationsHelper {
      Get information about next scheduled notifications
      A string containing all dates of upcoming notifications
      */
-    public func getUpcomingNotificationInfo() -> String {
+    public func getUpcomingNotificationInfo(result: @escaping (String) -> Void) {
         UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
             var descriptionString = ""
             for request in requests {
@@ -168,7 +168,7 @@ public class ScheduledNotificationsHelper {
                     descriptionString.append(DateFormatter.localizedString(from: date, dateStyle: .full, timeStyle: .full))
                 }
             }
-            return descriptionString
+            result(descriptionString)
         }
     }
     
