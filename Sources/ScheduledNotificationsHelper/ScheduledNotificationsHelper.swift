@@ -15,7 +15,7 @@ import SwiftUI
 @available(iOS 14, *)
 public class ScheduledNotificationsHelper {
     
-    static let shared = ScheduledNotificationsHelper()
+    static public let shared = ScheduledNotificationsHelper()
     
     static let TestNotificationIdentifier: String = "testnotification"
     
