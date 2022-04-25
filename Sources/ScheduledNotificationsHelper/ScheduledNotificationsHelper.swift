@@ -98,6 +98,9 @@ public class ScheduledNotificationsHelper {
     }
     
     private func generateNotificationRequest(forTodoAtDate: Date, isTestRequest: Bool = false) -> UNNotificationRequest {
+        guard let notificationContent = notificationContent else {
+            return
+        }
         var trigger: UNNotificationTrigger
         if isTestRequest {
             trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
@@ -111,7 +114,7 @@ public class ScheduledNotificationsHelper {
             requestID = ScheduledNotificationsHelper.TestNotificationIdentifier
         }
         let request = UNNotificationRequest(identifier: requestID,
-                                            content: self.notificationContent,
+                                            content: notificationContent,
                                             trigger: trigger)
         return request
     }
@@ -124,7 +127,7 @@ public class ScheduledNotificationsHelper {
             if error == nil,
                granted {
                 // Schedule first notification
-                self.notificationSetUp()
+                self.cancelAllAndScheduleForTomorrow()
                 result(true)
             } else {
                 // Handle the error here.
