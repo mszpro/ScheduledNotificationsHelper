@@ -15,12 +15,18 @@ import SwiftUI
 @available(iOS 14, *)
 public class ScheduledNotificationsHelper {
     
+    static let shared = ScheduledNotificationsHelper()
+    
     static let TestNotificationIdentifier: String = "testnotification"
     
-    var userSettings: NotificationSettingsInput
-    var notificationContent: UNMutableNotificationContent
+    var userSettings: NotificationSettingsInput?
+    var notificationContent: UNMutableNotificationContent?
     
-    public init(userSettings: NotificationSettingsInput, notificationContent: UNMutableNotificationContent) {
+    /*
+     You have to call this setup function when your app launches
+     You can access and change the `userSettings` and `notificationContent` everytime it changes in your app.
+     */
+    public func updateConfig(userSettings: NotificationSettingsInput, notificationContent: UNMutableNotificationContent) {
         self.userSettings = userSettings
         self.notificationContent = notificationContent
     }
@@ -32,7 +38,11 @@ public class ScheduledNotificationsHelper {
      - Call this function whenever your notification content changes
      - If it's a `isTestRequest`, notifications will be sent 5 seconds later to show the user.
      */
-    public func notificationSetUp(isTestRequest: Bool = false) {
+    public func cancelAllAndScheduleForTomorrow(isTestRequest: Bool = false) {
+        guard let userSettings = userSettings,
+              let notificationContent = notificationContent else {
+            return
+        }
         // Clear already delievered notifications
         let center = UNUserNotificationCenter.current()
         center.removeAllDeliveredNotifications()
