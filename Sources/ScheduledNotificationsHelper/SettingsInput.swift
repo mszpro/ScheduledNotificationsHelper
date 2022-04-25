@@ -13,4 +13,8 @@ import Foundation
 public struct NotificationSettingsInput {
     var delieveryTimeHourNumber: Int
     var isNotificationsTurnedOn: Bool
+    public init(delieveryTimeHourNumber: Int, isNotificationsTurnedOn: Bool) {
+        self.delieveryTimeHourNumber = delieveryTimeHourNumber
+        self.isNotificationsTurnedOn = isNotificationsTurnedOn
+    }
 }
