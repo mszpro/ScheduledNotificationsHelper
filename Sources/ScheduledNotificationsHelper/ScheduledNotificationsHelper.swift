@@ -52,7 +52,7 @@ public class ScheduledNotificationsHelper {
         }
         // Handle test requests
         if isTestRequest {
-            generateNotificationRequest(forTodoAtDate: Date(), isTestRequest: true).schedule()
+            generateNotificationRequest(forTodoAtDate: Date(), notificationContent: notificationContent, isTestRequest: true).schedule()
             return
         }
         UNUserNotificationCenter.current().getPendingNotificationRequests { allRequests in
@@ -97,10 +97,7 @@ public class ScheduledNotificationsHelper {
         }
     }
     
-    private func generateNotificationRequest(forTodoAtDate: Date, isTestRequest: Bool = false) -> UNNotificationRequest {
-        guard let notificationContent = notificationContent else {
-            return
-        }
+    private func generateNotificationRequest(forTodoAtDate: Date, notificationContent: UNMutableNotificationContent, isTestRequest: Bool = false) -> UNNotificationRequest {
         var trigger: UNNotificationTrigger
         if isTestRequest {
             trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
