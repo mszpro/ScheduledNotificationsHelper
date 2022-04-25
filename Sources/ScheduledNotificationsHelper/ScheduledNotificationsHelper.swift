@@ -155,6 +155,23 @@ public class ScheduledNotificationsHelper {
         }
     }
     
+    /*
+     Get information about next scheduled notifications
+     A string containing all dates of upcoming notifications
+     */
+    public func getUpcomingNotificationInfo() -> String {
+        UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
+            var descriptionString = ""
+            for request in requests {
+                if let dateTrigger = request.trigger as? UNCalendarNotificationTrigger,
+                   let date = dateTrigger.nextTriggerDate() {
+                    descriptionString.append(DateFormatter.localizedString(from: date, dateStyle: .full, timeStyle: .full))
+                }
+            }
+            return descriptionString
+        }
+    }
+    
 }
 
 #endif
