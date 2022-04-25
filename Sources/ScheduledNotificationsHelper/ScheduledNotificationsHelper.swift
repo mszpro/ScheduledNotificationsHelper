@@ -64,8 +64,8 @@ public class ScheduledNotificationsHelper {
             // Calculate the dates
             let startOfToday = Calendar.current.startOfDay(for: Date())
             guard let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: startOfToday),
-                  let todayAtScheduledTime = Calendar.current.date(byAdding: .hour, value: self.userSettings.delieveryTimeHourNumber, to: startOfToday),
-                  let tomorrowAtScheduledTime = Calendar.current.date(byAdding: .hour, value: self.userSettings.delieveryTimeHourNumber, to: tomorrow) else {
+                  let todayAtScheduledTime = Calendar.current.date(byAdding: .hour, value: userSettings.delieveryTimeHourNumber, to: startOfToday),
+                  let tomorrowAtScheduledTime = Calendar.current.date(byAdding: .hour, value: userSettings.delieveryTimeHourNumber, to: tomorrow) else {
                 return
             }
             let firstScheduledNotificationTime = (requests.first?.trigger as? UNCalendarNotificationTrigger)?.nextTriggerDate()
