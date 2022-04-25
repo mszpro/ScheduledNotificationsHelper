@@ -75,16 +75,16 @@ public class ScheduledNotificationsHelper {
             var request: UNNotificationRequest?
             if requests.isEmpty {
                 // 1. No notifications scheduled at all, schedule a notification for tomorrow
-                request = self.generateNotificationRequest(forTodoAtDate: tomorrowAtScheduledTime)
+                request = self.generateNotificationRequest(forTodoAtDate: tomorrowAtScheduledTime, notificationContent: notificationContent)
             } else if firstScheduledNotificationTime?.isSameDay(comparingTo: tomorrow) ?? false {
                 // 2. Notification scheduled for tomorrow, cancel all notifications, and re-schedule a notification for tomorrow
                 self.cancelAllNotifications()
-                request = self.generateNotificationRequest(forTodoAtDate: tomorrowAtScheduledTime)
+                request = self.generateNotificationRequest(forTodoAtDate: tomorrowAtScheduledTime, notificationContent: notificationContent)
             } else if (firstScheduledNotificationTime?.isSameDay(comparingTo: Date()) ?? false),
                       (firstScheduledNotificationTime ?? Date()) > Date() {
                 // 3. Notification scheduled for today (for example, opened the app at 1:00 am while scheduled notification is at 9:00 am), cancel all notifications, and re-schedule a notification for today
                 self.cancelAllNotifications()
-                request = self.generateNotificationRequest(forTodoAtDate: todayAtScheduledTime)
+                request = self.generateNotificationRequest(forTodoAtDate: todayAtScheduledTime, notificationContent: notificationContent)
             } else {
                 // Strange... Let's cancel all notifications and wait for next time's notification set up
                 self.cancelAllNotifications()
